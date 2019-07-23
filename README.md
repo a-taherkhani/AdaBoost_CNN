@@ -13,3 +13,7 @@ For All use of the data, please 'cite' the following:
 -The variable ‘n_estimators’ before ‘Ada_CNN’ has been set to 10. It determines the number of estimators in the AdaBoost-CNN.
 
 -The variable ‘epoch’ sets the number of training epochs of a CNN estimator in the AdaBoost-CNN.
+
+# Requirment
+
+This code is tested on Python 3.5.4 |Continuum Analytics, Inc.| (default, Aug 14 2017, 13:41:13) [MSC v.1900 64 bit (AMD64)]. It impalement CNN by Keras Using TensorFlow backend.
