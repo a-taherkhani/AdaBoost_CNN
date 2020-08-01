@@ -26,7 +26,6 @@ from sklearn.ensemble import AdaBoostClassifier
 #from multi_AdaBoost import AdaBoostClassifier
 from multi_AdaBoost import AdaBoostClassifier as Ada
 
-
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 #####deep lCNN
@@ -74,7 +73,6 @@ def train_CNN(X_train=None, y_train=None, epochs=None, batch_size=None, X_test=N
     #bibarize lables:
     # lb=LabelBinarizer()
     # y_test_b = lb.fit_transform(y_test)
-    
     lb=OneHotEncoder(sparse=False)
     y_test_b = y_test.reshape(len(y_test),1)
     y_test_b = lb.fit_transform(y_test_b)
@@ -233,7 +231,6 @@ bdt_real_test_CNN = Ada_CNN(
 
 bdt_real_test_CNN.fit(X_train_r, y_train, batch_size)
 test_real_errors_CNN=bdt_real_test_CNN.estimator_errors_[:]
-
 
 
 y_pred_CNN = bdt_real_test_CNN.predict(X_train_r)

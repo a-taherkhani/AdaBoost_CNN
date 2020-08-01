@@ -154,14 +154,11 @@ class AdaBoostClassifier(object):
         elif self.algorithm_ == 'SAMME.R':
             return self.real_boost(X, y, sample_weight)
 
-
-    
             
     def real_boost(self, X, y, sample_weight):
         #            estimator = deepcopy(self.base_estimator_)
-
         ############################################### my code:
-           
+          
         if len(self.estimators_) == 0:
             #Copy CNN to estimator:
             estimator = self.deepcopy_CNN(self.base_estimator_)#deepcopy of self.base_estimator_
@@ -248,7 +245,6 @@ class AdaBoostClassifier(object):
         
         if self.random_state_:
             estimator.set_params(random_state=1)
-
 #        estimator.fit(X, y, sample_weight=sample_weight)
 #################################### CNN (3) binery label:       
         # lb=LabelBinarizer()
@@ -266,7 +262,7 @@ class AdaBoostClassifier(object):
  ############################################ (4) CNN :
         y_pred_l = np.argmax(y_pred, axis=1)
         incorrect = y_pred_l != y
-#########################################################   
+#######################################################   
         estimator_error = np.dot(incorrect, sample_weight) / np.sum(sample_weight, axis=0)
 
         # if worse than random guess, stop boosting
