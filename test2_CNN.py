@@ -1,9 +1,11 @@
 
-__author__ = 'Xin'
+__author__ = 'Aboozar'
 '''
 Reference:
-Multi-class AdaBoosted Decision Trees:
-http://scikit-learn.org/stable/auto_examples/ensemble/plot_adaboost_multiclass.html
+    Please cite:
+        Taherkhani, Aboozar, Georgina Cosma, and T. M. McGinnity. "AdaBoost-CNN: an adaptive boosting algorithm for convolutional neural networks to classify multi-class imbalanced datasets using transfer learning." Neurocomputing (2020).
+    https://www.sciencedirect.com/science/article/pii/S0925231220304379
+
 '''
 import numpy 
 #############randome seed:
@@ -11,8 +13,10 @@ import numpy
 seed = 50
 numpy.random.seed(seed)
 #TensorFlow has its own random number generator
-from tensorflow import set_random_seed
-set_random_seed(seed)
+# from tensorflow import set_random_seed
+# set_random_seed(seed)
+import tensorflow
+tensorflow.random.set_seed(seed)
 ####################
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -30,14 +34,15 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Activation
 from keras.layers.convolutional import Conv1D, MaxPooling1D
 
-from sklearn.preprocessing import LabelBinarizer
+from sklearn.preprocessing import OneHotEncoder# LabelBinarizer
 
 #theano doesn't need any seed because it uses numpy.random.seed
 #######function def:
 def train_CNN(X_train=None, y_train=None, epochs=None, batch_size=None, X_test=None, y_test=None, n_features =10, seed =100):
     ######ranome seed
     numpy.random.seed(seed)
-    set_random_seed(seed)
+    # set_random_seed(seed)
+    tensorflow.random.set_seed(seed)
     
     model = baseline_model(n_features, seed)
     #reshape imput matrig to be compatibel to CNN
@@ -47,11 +52,16 @@ def train_CNN(X_train=None, y_train=None, epochs=None, batch_size=None, X_test=N
     newshape = tuple(newshape)
     X_train_r = numpy.reshape(X_train, newshape)#reshat the trainig data to (2300, 10, 1) for CNN
     #binarize labes:
-    lb=LabelBinarizer()
-    y_train_b = lb.fit_transform(y_train)
+    # lb=LabelBinarizer()
+    # y_train_b = lb.fit_transform(y_train)
+    
+    lb=OneHotEncoder(sparse=False)
+    y_train_b =y_train.reshape(len(y_train), 1)
+    y_train_b = lb.fit_transform(y_train_b)
     #train CNN
     numpy.random.seed(seed)
-    set_random_seed(seed)
+    tensorflow.random.set_seed(seed)
+    # set_random_seed(seed)
     model.fit(X_train_r, y_train_b, epochs=epochs, batch_size=batch_size)
     
     #####################reshap test data and evaluate:
@@ -61,8 +71,12 @@ def train_CNN(X_train=None, y_train=None, epochs=None, batch_size=None, X_test=N
     newshape = tuple(newshape)
     X_test_r = numpy.reshape(X_test, newshape)
     #bibarize lables:
-    lb=LabelBinarizer()
-    y_test_b = lb.fit_transform(y_test)
+    # lb=LabelBinarizer()
+    # y_test_b = lb.fit_transform(y_test)
+    
+    lb=OneHotEncoder(sparse=False)
+    y_test_b = y_test.reshape(len(y_test),1)
+    y_test_b = lb.fit_transform(y_test_b)
     
     yp=model.evaluate(X_train_r, y_train_b)
     print('\nSingle CNN evaluation on training data, [loss, test_accuracy]:')
@@ -76,7 +90,8 @@ def train_CNN(X_train=None, y_train=None, epochs=None, batch_size=None, X_test=N
 #####deep CNN
 def baseline_model(n_features=10, seed=100):
     numpy.random.seed(seed)
-    set_random_seed(seed)
+    # set_random_seed(seed)
+    tensorflow.random.set_seed(seed)
 	# create model
     model = Sequential()
     model.add(Conv1D(32, 3, padding = "same", input_shape=(n_features, 1)))
@@ -98,7 +113,8 @@ def baseline_model(n_features=10, seed=100):
     model.add(Activation('softmax'))
 	# Compile model
     numpy.random.seed(seed)
-    set_random_seed(seed)
+    # set_random_seed(seed)
+    tensorflow.random.set_seed(seed)
 #    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.compile(loss='categorical_crossentropy', optimizer='adagrad', metrics=['accuracy'])
 
@@ -192,6 +208,8 @@ def reshape_for_CNN(X):
     
 n_features=10   
 n_classes=3
+# n_classes=2
+
 
 X_train, y_train, X_test, y_test = synethetic_data (n_features=n_features, n_classes = n_classes)
 batch_size=10
@@ -229,3 +247,9 @@ train_CNN(X_train = X_train, y_train = y_train, epochs=10,
           batch_size=batch_size ,X_test = X_test, y_test = y_test, 
           n_features=n_features, seed=seed)
 
+'''
+Refrence to the original AdaBoost:
+    
+Multi-class AdaBoosted Decision Trees:
+http://scikit-learn.org/stable/auto_examples/ensemble/plot_adaboost_multiclass.html
+'''

@@ -7,7 +7,7 @@ from copy import deepcopy
 ##kerase & CNN:
 #from keras import models as Models
 from keras.models import Sequential
-from sklearn.preprocessing import LabelBinarizer
+from sklearn.preprocessing import OneHotEncoder #LabelBinarizer
 
 
 
@@ -173,8 +173,13 @@ class AdaBoostClassifier(object):
                 estimator.set_params(random_state=1)
 #        estimator.fit(X, y, sample_weight=sample_weight)
  #################################### CNN (3) binery label:       
-        lb=LabelBinarizer()
-        y_b = lb.fit_transform(y)
+        # lb=LabelBinarizer()
+        # y_b = lb.fit_transform(y)
+        
+        lb=OneHotEncoder(sparse=False)
+        y_b=y.reshape(len(y),1)
+        y_b=lb.fit_transform(y_b)
+        
         estimator.fit(X, y_b, sample_weight=sample_weight, epochs = self.epochs, batch_size = self.batch_size)
 ############################################################
         y_pred = estimator.predict(X)
@@ -246,8 +251,13 @@ class AdaBoostClassifier(object):
 
 #        estimator.fit(X, y, sample_weight=sample_weight)
 #################################### CNN (3) binery label:       
-        lb=LabelBinarizer()
-        y_b = lb.fit_transform(y)
+        # lb=LabelBinarizer()
+        # y_b = lb.fit_transform(y)
+        
+        lb=OneHotEncoder(sparse=False)
+        y_b=y.reshape(len(y),1)
+        y_b=lb.fit_transform(y_b)
+        
         estimator.fit(X, y_b, sample_weight=sample_weight, epochs = self.epochs, batch_size = self.batch_size)
 ############################################################        
         y_pred = estimator.predict(X)
