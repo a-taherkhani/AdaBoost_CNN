@@ -1,4 +1,4 @@
-__author__ = 'Xin, ab'
+__author__ = 'Xin, Aboozar'
 
 import numpy as np
 from numpy.core.umath_tests import inner1d

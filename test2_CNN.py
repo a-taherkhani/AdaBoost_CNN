@@ -2,6 +2,7 @@
 __author__ = 'Aboozar'
 '''
 Reference:
+    This is an implementation of the following paper:
     Please cite:
         Taherkhani, Aboozar, Georgina Cosma, and T. M. McGinnity. "AdaBoost-CNN: an adaptive boosting algorithm for convolutional neural networks to classify multi-class imbalanced datasets using transfer learning." Neurocomputing (2020).
     https://www.sciencedirect.com/science/article/pii/S0925231220304379
@@ -248,7 +249,7 @@ train_CNN(X_train = X_train, y_train = y_train, epochs=10,
           n_features=n_features, seed=seed)
 
 '''
-Refrence to the original AdaBoost:
+Refrence to the original AdaBoost(__author__ = 'Xin'):
     
 Multi-class AdaBoosted Decision Trees:
 http://scikit-learn.org/stable/auto_examples/ensemble/plot_adaboost_multiclass.html
