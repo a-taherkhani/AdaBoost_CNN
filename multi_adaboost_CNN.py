@@ -99,7 +99,7 @@ class AdaBoostClassifier(object):
         .. [1] J. Zhu, H. Zou, S. Rosset, T. Hastie, "Multi-class AdaBoost", 2009.
 
         """
-        proba = estimator.predict_proba(X)
+        proba = estimator.predict(X)
 
         # Displace zero probabilities so the log is defined.
         # Also fix negative elements which may occur with
