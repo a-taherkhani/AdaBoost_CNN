@@ -19,7 +19,7 @@ https://doi.org/10.1016/j.neucom.2020.03.064
 
 # How to run on Google colan:
 
-'Adaboost_CNN_colab.ipynb' can be used to run Adaboost_CNN on on Google Colab.
+'Adaboost_CNN_colab.ipynb' can be used to run Adaboost_CNN on Google Colab.
 
 # Requirment
 
